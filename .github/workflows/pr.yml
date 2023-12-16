@@ -9,20 +9,14 @@ name: PR
 on: [pull_request]
 
 jobs:
-  gitlint:
-    name: Gitlint
-    runs-on: ubuntu-latest
-    steps:
-    - uses: seL4/ci-actions/gitlint@master
+  checks:
+    uses: ./.github/workflows/workflow-checks.yml
 
-  whitespace:
-    name: 'Trailing Whitespace'
-    runs-on: ubuntu-latest
-    steps:
-    - uses: seL4/ci-actions/git-diff-check@master
+  ci:
+    uses: ./.github/workflows/workflow-build.yml
+    secrets: inherit
 
-  shell:
-    name: 'Portable Shell'
-    runs-on: ubuntu-latest
-    steps:
-    - uses: seL4/ci-actions/bashisms@master
+  test:
+    needs: [ci]
+    uses: ./.github/workflows/workflow-test.yml
+    secrets: inherit

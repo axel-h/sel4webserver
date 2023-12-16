@@ -4,10 +4,10 @@
 
 # Build web server demo app on pull request
 
-name: Web Server
+name: workflow-test
 
 on:
-  pull_request:
+  workflow_call:
 
 jobs:
   test:
